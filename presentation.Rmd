@@ -1,0 +1,133 @@
+---
+title: "Jurimetrics"
+date: "Brussels, July 06"
+author: 
+- "José de Jesus Filho"
+- "Julio Trecenti"
+- "Brazilian Jurimetrics Association"
+output: revealjs::revealjs_presentation
+---
+
+<!-- Slide 01 ----------------------------------------------------------------->
+## What is jurimetrics?
+
+```{r include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+- Statistics in the law
+- Jurimetrics Brazilian Association
+
+<!-- Slide 02 ----------------------------------------------------------------->
+## Jurimetrics: spheres
+
+- One litigation
+    - Compensating for the loss of a chance
+- Many litigations
+    - Predictive models
+    - Decision making
+    - Topic models
+- Public policy
+    - Public policy impact
+- Court administration
+    - litigation complecity
+    - court productivity
+
+<!-- Slide 03 ----------------------------------------------------------------->
+## Orgs
+
+- github.com/abjur: ABJ's org
+- github.com/courtsbr: github organisation
+- github.com/decryptr: breaking captchas using R
+
+<!-- Slide 04 ----------------------------------------------------------------->
+## Packages
+
+- `tjsp` and `esaj` packages: web scraping.
+- `jurisMiner`: analyze judicial text data.
+- ...
+
+<!-- Slide 05 ----------------------------------------------------------------->
+## Download: usage
+
+```{r eval=FALSE}
+library(tjsp)
+s <- cjsg_session()
+parms <- cjsg_parms(s, livre = 'erro medico')
+cjsg(s, parms, path = 'data-raw', max_pag = 10)
+```
+
+<!-- Slide 06 ----------------------------------------------------------------->
+## Parsing: usage
+
+```{r eval=FALSE}
+files <- dir('data-raw', full.names = TRUE)
+d_cjsg <- parse_cjsg(files)
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# saveRDS(d_cjsg, 'data-raw/d_cjsg.rds')
+library(magrittr)
+d_cjsg <- readRDS('data-raw/d_cjsg.rds')
+```
+
+```{r}
+dplyr::glimpse(d_cjsg)
+```
+
+<!-- Slide 07 ----------------------------------------------------------------->
+## Download and parse full decision
+
+```{r}
+code <- d_cjsg$cd_acordao[1]
+tjsp::download_pdf(code, 'data-raw')
+```
+
+<!-- Slide 07 ----------------------------------------------------------------->
+## Clean text data
+
+<!-- Slide 08 ----------------------------------------------------------------->
+## Topic models
+
+- unsupervised learning of litigation topics
+
+<!-- Slide 09 ----------------------------------------------------------------->
+## Predictive models
+
+- using bag of words + LASSO, RF, NN etc.
+
+<!-- Slide 10 ----------------------------------------------------------------->
+## Influence diagrams -> decision
+
+- bayesian network with decision node.
+
+<!-- Slide 11 ----------------------------------------------------------------->
+
+```{r eval=FALSE}
+u_img <- "http://esaj.tjsp.jus.br/cjsg/imagemCaptcha.do"
+u_aud <- "http://esaj.tjsp.jus.br/cjsg/somCaptcha.do"
+r_img <- httr::GET(u_img, httr::write_disk('data-raw/captcha.png'))
+r_aud <- httr::GET(u_aud, httr::write_disk('data-raw/captcha.mp3'))
+```
+<!-- Slide 12 ----------------------------------------------------------------->
+## Breaking captchas
+
+```{r fig.height=3}
+library(decryptr)
+read_captcha('data-raw/captcha.png') %>% plot()
+captchaSajAudio::decifrar('data-raw/captcha.mp3')
+```
+
+<!-- Slide 13 ----------------------------------------------------------------->
+## Future work: tech
+
+- Better scrapers
+- Public API
+
+<!-- Slide 14 ----------------------------------------------------------------->
+## Future work: research
+
+- Most important arguments
+
+<!-- Slide 15 ----------------------------------------------------------------->
+## Links
