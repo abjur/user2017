@@ -12,7 +12,7 @@ registerDoMC(cores=2)
 
 ## Extrair somente o data.frame e as variáveis de interesse.
 
-base<- dplyr::select(custodia$documents,-texts)
+base<- dplyr::select(custodia$documents,-c(texts,materia,`_language`,`_encoding`))
 base<-as.data.frame(unclass(base))
 base<-base[c(3,1,2,4:8)]
 
