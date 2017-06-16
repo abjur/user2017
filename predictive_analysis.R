@@ -43,14 +43,14 @@ metric = "ROC")
 
 #### Predição
 
-pglm<-predict(mod_glm,test)
+pglm<-predict(mod_GLM,test)
 ppglm<-confusionMatrix(pglm,test$decisao)
 ppglm
 
 
 #### Diagnóstico
 
-p<-predict(mod_glm,test,"prob")[[1]]
+p<-predict(mod_GLM,test,"prob")[[1]]
 t<-ifelse(test$decisao=="concedido",1,0)
 a<-classifierplots(t,p)
 
@@ -193,3 +193,6 @@ plot_features(explanation_errado, ncol = 2)
 labs(x="Variável",y="Peso")+
   scale_fill_manual(values=c("darkgreen","darkred"),
                     labels=c("apoia","contraria"))
+
+#ggsave(filename = "~/R/custodia/plots/gg_errado.pdf",width=15,height=7,device = cairo_pdf)
+
