@@ -94,6 +94,9 @@ tjsp::download_pdf(code, 'data-raw')
 <!-- Slide 07 ----------------------------------------------------------------->
 ## Clean text data
 
+- regex... regex...
+- future: thesaurus
+
 <!-- Slide 08 ----------------------------------------------------------------->
 ## Topic models
 
@@ -113,10 +116,20 @@ tjsp::download_pdf(code, 'data-raw')
 knitr::include_graphics('id.png', dpi = 250)
 ```
 
-
 <!-- Slide 11 ----------------------------------------------------------------->
 
-## Breaking CAPTCHAs
+## Breaking captchas
+
+```{r fig.height=3}
+library(decryptr)
+read_captcha('data-raw/captcha.png') %>% plot()
+captchaSajAudio::decifrar('data-raw/captcha.mp3')
+```
+
+
+<!-- Slide 12 ----------------------------------------------------------------->
+
+## Breaking CAPTCHAs - API
 
 ```{r echo=FALSE}
 knitr::include_graphics('api-decryptr.png', auto_pdf = TRUE, dpi = 200)
@@ -130,14 +143,6 @@ r_img <- GET(u_img, write_disk('data-raw/captcha.png'))
 r_aud <- GET(u_aud, write_disk('data-raw/captcha.mp3'))
 ```
 
-<!-- Slide 12 ----------------------------------------------------------------->
-## Breaking captchas
-
-```{r fig.height=3}
-library(decryptr)
-read_captcha('data-raw/captcha.png') %>% plot()
-captchaSajAudio::decifrar('data-raw/captcha.mp3')
-```
 
 <!-- Slide 13 ----------------------------------------------------------------->
 ## Future work: tech
