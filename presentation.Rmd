@@ -194,7 +194,8 @@ r_aud <- GET(u_aud, write_disk('data-raw/captcha.mp3'))
 
 ### research
 
-- Most relevant arguments
+- Most relevant arguments (tf-idf)
+- Network analysis of law practitioners.
 
 <!-- Slide 14 ----------------------------------------------------------------->
 
