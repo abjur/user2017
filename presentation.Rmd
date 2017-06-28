@@ -1,15 +1,15 @@
 ---
 title: "Jurimetrics"
 date: "Brussels, July 06"
+instite: "Brazilian Jurimetrics Association"
 author: 
 - "José de Jesus Filho"
 - "Julio Trecenti"
-- "Brazilian Jurimetrics Association"
-output: revealjs::revealjs_presentation
+output: beamer_presentation
 ---
 
 <!-- Slide 01 ----------------------------------------------------------------->
-## What is jurimetrics?
+### What is jurimetrics?
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
@@ -17,6 +17,11 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 - Statistics in the law
 - Jurimetrics Brazilian Association
+
+```{r echo=FALSE, fig.align='center'}
+knitr::include_graphics('abj_simple.png', auto_pdf = TRUE, dpi = 450)
+```
+
 
 <!-- Slide 02 ----------------------------------------------------------------->
 ## Jurimetrics: spheres
@@ -38,7 +43,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 - github.com/abjur: ABJ's org
 - github.com/courtsbr: github organisation
-- github.com/decryptr: breaking captchas using R
+- github.com/decryptr: breaking CAPTCHAs using R
 
 <!-- Slide 04 ----------------------------------------------------------------->
 ## Packages
@@ -68,17 +73,20 @@ d_cjsg <- parse_cjsg(files)
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 # saveRDS(d_cjsg, 'data-raw/d_cjsg.rds')
 library(magrittr)
-d_cjsg <- readRDS('data-raw/d_cjsg.rds')
+d_cjsg <- readRDS('data-raw/d_cjsg.rds') %>% 
+  dplyr::select(n_processo, comarca, data_julgamento,
+                data_registro, ementa, orgao_julgador,
+                relatora, classe_assunto)
 ```
 
 ```{r}
-dplyr::glimpse(d_cjsg)
+tibble::glimpse(d_cjsg, width = 50)
 ```
 
 <!-- Slide 07 ----------------------------------------------------------------->
 ## Download and parse full decision
 
-```{r}
+```{r eval=FALSE}
 code <- d_cjsg$cd_acordao[1]
 tjsp::download_pdf(code, 'data-raw')
 ```
@@ -94,21 +102,30 @@ tjsp::download_pdf(code, 'data-raw')
 <!-- Slide 09 ----------------------------------------------------------------->
 ## Predictive models
 
-- using bag of words + LASSO, RF, NN etc.
+- Using bag of words + LASSO, RF, NN etc.
 
 <!-- Slide 10 ----------------------------------------------------------------->
-## Influence diagrams -> decision
+## Influence diagrams: decision
 
 - bayesian network with decision node.
 
+
 <!-- Slide 11 ----------------------------------------------------------------->
 
-```{r eval=FALSE}
+## Breaking CAPTCHAs
+
+```{r echo=FALSE}
+knitr::include_graphics('api-decryptr.png', auto_pdf = TRUE, dpi = 200)
+```
+
+```{r eval=FALSE, echo=FALSE}
+library(httr)
 u_img <- "http://esaj.tjsp.jus.br/cjsg/imagemCaptcha.do"
 u_aud <- "http://esaj.tjsp.jus.br/cjsg/somCaptcha.do"
-r_img <- httr::GET(u_img, httr::write_disk('data-raw/captcha.png'))
-r_aud <- httr::GET(u_aud, httr::write_disk('data-raw/captcha.mp3'))
+r_img <- GET(u_img, write_disk('data-raw/captcha.png'))
+r_aud <- GET(u_aud, write_disk('data-raw/captcha.mp3'))
 ```
+
 <!-- Slide 12 ----------------------------------------------------------------->
 ## Breaking captchas
 
@@ -127,7 +144,21 @@ captchaSajAudio::decifrar('data-raw/captcha.mp3')
 <!-- Slide 14 ----------------------------------------------------------------->
 ## Future work: research
 
-- Most important arguments
+- Most relevant arguments
 
 <!-- Slide 15 ----------------------------------------------------------------->
 ## Links
+
+- Github:
+    - ABJ: https://github.com/abjur
+    - decryptr: https://github.com/decryptr
+    - courtsbr: https://github.com/courtsbr
+    - Jose: https://github.com/jjesusfilho
+    - Julio: https://github.com/jtrecenti
+- Sites (in portuguese):
+    - ABJ Blog: http://abj.org.br
+    - Brazil Blog Aggregator: http://brbloggers.com.br
+    - Our R blog: http://curso-r.com
+- Personal: 
+    - http://jjesusfilho.info
+    - http://jtrecenti.com
