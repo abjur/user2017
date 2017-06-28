@@ -109,6 +109,10 @@ tjsp::download_pdf(code, 'data-raw')
 
 - bayesian network with decision node.
 
+```{r echo=FALSE}
+knitr::include_graphics('id.png', dpi = 250)
+```
+
 
 <!-- Slide 11 ----------------------------------------------------------------->
 
