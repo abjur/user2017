@@ -26,17 +26,50 @@ knitr::include_graphics('abj_simple.png', auto_pdf = TRUE, dpi = 450)
 <!-- Slide 02 ----------------------------------------------------------------->
 ## Jurimetrics: spheres
 
-- One litigation
-    - Compensating for the loss of a chance
-- Many litigations
-    - Predictive models
-    - Decision making
-    - Topic models
-- Public policy
-    - Public policy impact
-- Court administration
-    - litigation complecity
-    - court productivity
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{itemize}
+\item One litigation
+\begin{itemize}
+\item compensating for the loss of a chance
+\end{itemize}
+\item Many litigations
+\begin{itemize}
+\item predictive models
+\item decision making
+\item topic models
+\end{itemize}
+\item Public policy and Court administration
+\begin{itemize}
+\item public policy impact
+\item litigation complexity
+\item court and judge productivity
+\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+
+\includegraphics[width=0.7\textwidth]{spheres}
+
+\end{column}
+\end{columns}
+
+```{r echo=FALSE, eval=FALSE}
+library(ggplot2)
+dt <- data.frame(col = factor(1:3), 
+                 sz = c(1, 2, 10),
+                 x = c(1, 1, 1),
+                 y = c(1, 1, 1))
+p <- ggplot(dt) +
+  geom_point(aes(x = x, y = y, size = sz, colour = col), 
+             alpha = .6) +
+  scale_size_continuous(range = c(150, 80)) +
+  guides(colour = FALSE, size = FALSE) +
+  theme_void()
+ggsave('spheres.png', p, width = 5, height = 5)
+```
+
 
 <!-- Slide 03 ----------------------------------------------------------------->
 ## Orgs
@@ -74,7 +107,7 @@ d_cjsg <- parse_cjsg(files)
 # saveRDS(d_cjsg, 'data-raw/d_cjsg.rds')
 library(magrittr)
 d_cjsg <- readRDS('data-raw/d_cjsg.rds') %>% 
-  dplyr::select(n_processo, comarca, data_julgamento,
+  dplyr::select(n_processo, cd_acordao, comarca, data_julgamento,
                 data_registro, ementa, orgao_julgador,
                 relatora, classe_assunto)
 ```
@@ -96,6 +129,13 @@ tjsp::download_pdf(code, 'data-raw')
 
 - regex... regex...
 - future: thesaurus
+
+Example: 
+
+```{r echo=FALSE}
+cat(stringr::str_wrap(stringr::str_trunc(d_cjsg$ementa[2], 350), 50))
+```
+
 
 <!-- Slide 08 ----------------------------------------------------------------->
 ## Topic models
@@ -145,15 +185,19 @@ r_aud <- GET(u_aud, write_disk('data-raw/captcha.mp3'))
 
 
 <!-- Slide 13 ----------------------------------------------------------------->
-## Future work: tech
+## Future work
+
+### tech
 
 - Better scrapers
 - Public API
 
-<!-- Slide 14 ----------------------------------------------------------------->
-## Future work: research
+### research
 
 - Most relevant arguments
+
+<!-- Slide 14 ----------------------------------------------------------------->
+
 
 <!-- Slide 15 ----------------------------------------------------------------->
 ## Links
