@@ -5,6 +5,7 @@ library(LOGIT)
 library(caret)
 library(doMC)
 registerDoMC(cores=2)
+lirary(lime)
 
 ## Carregar a base criada com o script_extracao_e_manipulacao_custodia.R
 
